@@ -1,0 +1,12 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 6vw;
+}
+
+.graf {
+    color: lightslategray;
+    width: 60vw;
+}
+
+*[class^="header"] {
+}
