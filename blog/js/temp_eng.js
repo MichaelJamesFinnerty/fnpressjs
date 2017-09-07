@@ -41,9 +41,14 @@ function insert_heading(header, indents) {
 //insert strings as grafs
 function insert_graf(graf, indents) {
     
-    var newGraf = document.createElement("p");
-    newGraf.className = "graf";
-    
+    if (graf.slice(0,2) === "#!") {
+        var newGraf = document.createElement("code");
+        newGraf.className = "code";
+        graf = graf.slice(2);
+    } else {
+        var newGraf = document.createElement("p");
+        newGraf.className = "graf";
+    }
     newGraf.innerHTML = graf;    
     var indentedGraf = element_indent(newGraf, indents);
     document.body.appendChild(indentedGraf);
