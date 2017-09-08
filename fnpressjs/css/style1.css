@@ -1,6 +1,8 @@
 body {
     font-family: 'Montserrat', sans-serif;
     padding-left: 6vw;
+    
+    
 }
 
 .graf {
@@ -9,4 +11,7 @@ body {
 }
 
 *[class^="header"] {
+}
+
+code {
 }
