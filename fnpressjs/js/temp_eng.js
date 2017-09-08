@@ -1,63 +1,102 @@
+function fnpress(json_string, dest) {        
+    fnparse(new_fnobj("", json_string, 0, "", (dest ? dest : "")));
+    return true;
+}
+
+function new_fnobj(fnref, _json, _i, _html, _dest) {
+    
+    var fnobj = {
+        fnjson: (_json ? _json : (fnref.fnjson ? fnref.fnjson : "")),        
+        indt: (_i ? _i : (fnref.indt ? fnref.indt : 0)),        
+        html: (_html ? _html : (fnref.html ? fnref.html : 0)),        
+        dest: (_dest ? _dest : (fnref.dest ? fnref.dest : "")),        
+        insert_html: function() {
+            this.html.style.marginLeft = detLeftMargin(this);
+            if (!this.dest) {document.body.appendChild(this.html);
+            } else {
+                document.getElementById(this.dest).appendChild(this.html);
+            }
+        },
+        mktml_h: function() {
+            var newHeading = document.createElement("h"+this.indt);
+            newHeading.className = "header"+this.indt;
+            newHeading.innerHTML = this.fnjson;
+
+            return newHeading;
+        },        
+        mktml_p: function() {
+
+            if (this.fnjson.slice(0,2) === "#!") {        
+                var newP = document.createElement("code");
+                newP.className = "code";
+                newP.innerHTML = this.fnjson.slice(2);
+
+            } else {
+                var newP = document.createElement("p");
+                newP.className = "graf";
+                newP.innerHTML = this.fnjson;        
+
+            }
+            
+            return newP;
+        }            
+    }
+        
+    function detLeftMargin(e){
+      return eval(e.indt*12)+"px";
+    };
+            
+    return fnobj;    
+}
+
+
 //build json into html contents
-function build_page(obj, indents) {
-
-  if (!indents) {indents = 0;}
-
+function fnparse(o) {
+    
   //arrays
-  if (Array.isArray(obj)) {
-      //parse items in array
-      for (f in obj) {build_page(obj[f], indents);}
+  if (Array.isArray(o.fnjson)) {
+      
+    //recurse each item back into fnparse
+    for (f in o.fnjson) {
+      var json_element = o.fnjson[f]
+      fnparse(
+          new_fnobj(o, json_element)
+      );
+    }
 
   //objects
-  } else if (typeof(obj)==="object"){
-      //write the key as heading, then parse the value
-      indents++;
-      for (k in Object.keys(obj)) {
-            //console.log(typeof(indents), indents);
-          var key = Object.keys(obj)[k];
-            //console.log(Array(indents).join("\t"), key);
-          insert_heading(key, indents);
-          build_page(obj[key], indents);
+  } else if (typeof(o.fnjson)==="object"){
+      
+    o.indt++;
+      
+    for (k in Object.keys(o.fnjson)) {
+        
+      var key = Object.keys(o.fnjson)[k];
+
+      //console.log(Array(o.indt).join("\t"), key);
+        
+      // write the key as a heading element
+      if (key.length > 3 || key[0] !== "#") {
+        var newH = new_fnobj(o, key)
+        newH.html = newH.mktml_h();
+        newH.insert_html();
       }
-  //strings
-  } else if (typeof(obj) === "string") {
-      //write string;
-        //console.log(Array(indents).join("\t"), obj);
-      if (obj) {insert_graf(obj, indents)};
-
-  } 
-};
-
-//insert object keys as headings
-function insert_heading(header, indents) {
-    var newHeading = document.createElement("h"+indents);
-    newHeading.innerHTML = header;
-    newHeading.className = "header"+indents;
-    
-    var indentedHeading = element_indent(newHeading, indents)
-    document.body.appendChild(newHeading);
-};
-
-//insert strings as grafs
-function insert_graf(graf, indents) {
-    
-    if (graf.slice(0,2) === "#!") {
-        var newGraf = document.createElement("code");
-        newGraf.className = "code";
-        graf = graf.slice(2);
-    } else {
-        var newGraf = document.createElement("p");
-        newGraf.className = "graf";
+   
+      //fnparse the value paired with the key/heading
+      var json_element = o.fnjson[key]
+      if (json_element) {
+        fnparse(
+          new_fnobj(o, json_element)
+        );
+      }
     }
-    newGraf.innerHTML = graf;    
-    var indentedGraf = element_indent(newGraf, indents);
-    document.body.appendChild(indentedGraf);
-};
+      
+  //strings;
+  } else if (typeof(o.fnjson) === "string") {
+      //insert string as graf
+      o.html = o.mktml_p();
+      o.insert_html();
+  } 
 
-//apply element indents to everything
-function element_indent(element, indents){
-  if (!indents) {indents = 0};
-  //console.log("Styling element\t",eval(indents*5)+"px");
-  element.style.marginLeft = eval(indents*12)+"px";
-  return element;
+  return true;
 };
