@@ -18,7 +18,15 @@ function new_fnobj(fnref, _json, _i, _html, _dest) {
             }
         },
         mktml_h: function() {
-            var newHeading = document.createElement("h"+this.indt);
+            if (this.fnjson.slice(0,1) === "#") {
+                this.indt = this.fnjson.slice(1,2);
+                this.fnjson = this.fnjson.slice(2);
+            } else if (this.fnjson.slice(0,1) === "*") {      
+                var newHeading = document.createElement("h"+this.fnjson.slice(1,2));
+                this.fnjson = this.fnjson.slice(2);                
+            }
+
+            if (!newHeading) {var newHeading = document.createElement("h"+this.indt);}  
             newHeading.className = "header"+this.indt;
             newHeading.innerHTML = this.fnjson;
 
@@ -86,7 +94,7 @@ function fnparse(o) {
       var json_element = o.fnjson[key]
       if (json_element) {
         fnparse(
-          new_fnobj(o, json_element)
+          new_fnobj(newH, json_element)
         );
       }
     }
