@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="css/style1.css">
+    <script src="posts/index.json"></script>
     <script src="posts/pymkdir.json"></script>
+    <script src="structs/header.json"></script>
     <script src="js/temp_eng.js"></script>
     <title>Document</title>
 </head>
 
 <body>
+    <div id="headway"></div>
+    <div><br /></div>
+    
+    <div id="main"></div>
+    <div><br /></div>            
+    
+    
+    
     <script>
-      build_page(JSON.parse(pymkdir_data));    
+      fnpress(JSON.parse(header_data), "headway");
+      fnpress(JSON.parse(index_data), "main");
+      fnpress(JSON.parse(pymkdir_data));        
     </script>
+   
 </body>
 
 </html>
