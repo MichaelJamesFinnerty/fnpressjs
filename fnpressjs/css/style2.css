@@ -1,0 +1,14 @@
+#headway {
+    position: fixed;
+    top: 0;
+    height: 30vh;
+}
+
+#next-button {
+    position: relative;
+}
+
+#main {
+    position: relative;
+    top: 33vh;
+}
