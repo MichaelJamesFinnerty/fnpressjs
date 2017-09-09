@@ -47,7 +47,12 @@ function new_fnobj(fnref, _json, _i, _html, _dest) {
             }
             
             return newP;
-        }            
+        },
+        mktml_inj: function() {
+                var newINJ = document.createElement("span");
+                newINJ.insertAdjacentHTML('beforeend', this.fnjson)
+            return newINJ;
+        }        
     }
         
     function detLeftMargin(e){
@@ -74,7 +79,8 @@ function fnparse(o) {
 
   //objects
   } else if (typeof(o.fnjson)==="object"){
-      
+    
+    // each object level raises the indententation level by 1
     o.indt++;
       
     for (k in Object.keys(o.fnjson)) {
@@ -102,7 +108,11 @@ function fnparse(o) {
   //strings;
   } else if (typeof(o.fnjson) === "string") {
       //insert string as graf
-      o.html = o.mktml_p();
+      if (o.fnjson.slice(0,1) != "<") {
+        o.html = o.mktml_p();    
+      } else {
+        o.html = o.mktml_inj();
+      }
       o.insert_html();
   } 
 
