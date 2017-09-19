@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>fnpressjs | lightweight json to html templating</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Pragati+Narrow" rel="stylesheet">
+    <script src="../fnpress.js"></script>
+    <script src="pages/man.json"></script>
+</head>
+
+<body>
+
+    <div>
+        <div id="navbar">
+
+        </div>
+
+
+
+        <div id="main">
+
+        </div>
+    </div>
+
+    <script>
+
+        window.addEventListener("DOMContentLoaded", load_handler);
+        
+        //  snap out the top level keys
+        //  apply clear/press click handlers to each item in navbar
+        var mand = JSON.parse(man_data);        
+        var sec_headers = Object.keys(mand[0]);
+        var nbar = document.getElementById("navbar");
+        
+        //  window load handler
+        function load_handler() {
+        
+          //  fnpress the navbar and initial main window contents        
+          load_to_nav(sec_headers);
+          load_to_main("Kinds of objects");
+
+          //  apply click listener to element in navbar
+          for (f = 0; f < nbar.children.length; f++) {
+            nbar.children[f].addEventListener("click", navclick_handler, false);
+          }
+
+        }
+            
+        //  navbar click handler
+        function navclick_handler() {
+                
+          // clear main div contents
+          clear_main();
+          
+          // fnpress object based on the click
+          load_to_main(event.target.innerHTML);
+          
+          //  clear main div contents
+          function clear_main() {
+            var mn = document.getElementById("main");
+            while (mn.firstChild) {mn.removeChild(mn.firstChild);}
+          }
+
+        }
+        
+        //  create new press object based on the click and fnpress to main
+        function load_to_main(hdr) {
+            var pobj = {}
+            pobj[hdr] = mand[0][hdr];
+            fnpress(pobj, "main");            
+        }
+        
+        //  create table_of_contents and fnpress to navbar        
+        function load_to_nav(sec_headers) {
+            var table_of_contents = {};
+            for (sh in sec_headers) {table_of_contents[sec_headers[sh]] = "";}
+            fnpress(table_of_contents, "navbar");
+        }
+        
+    </script>
+
+</body>
+
+</html>

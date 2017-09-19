@@ -1,0 +1,84 @@
+/*
+
+Quick Start
+
+Installing fnpressjs
+
+Kinds of objects
+
+    Key/value pairs
+    
+        Keys = headings
+        
+            modify with #/*
+            
+        Values = graf content
+        
+            insert code block (#!)
+            
+    Arrays
+
+        Iteration
+
+Raw HTML injection
+
+    "<"
+
+An example deployment
+
+*/
+
+var man_data = `[{
+
+    "Hello":"World",
+
+    "Quick Start": [
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+        "Voluptatum libero voluptatibus natus possimus, earum ut, adipisci iste, cum, maiores eligendi doloremque doloribus aliquam nobis est quis.",
+        "Quos aut, sunt tempore."],
+
+    "Installing fnpressjs": [
+
+        "fnpressjs is <a href='https://github.com/michaeljamesfinnerty/fnpressjs'>hosted through github</a> and can be cloned, downloaded as a compressed (.zip) archive, or added as a submodule to an existing repository",
+        {
+          "Cloning fnpressjs":"",
+          "Downloading fnpressjs as a .zip archive":"",
+          "Adding fnpressjs to an existing repository":""
+        }
+    ],
+
+    "Kinds of objects":[{
+      "Key/Value pairs":
+        [
+          "fnpressjs parses key/value pairs into html headings and paragrphs, respecively.",
+          "#!{'Hello':'World'}",
+          "#!Will render as",
+          "#!<h1 class='header1'>Hello</h1>",
+          "#!<p class='graf'>World</p>",
+          {
+            "Keys (Headings)":
+            [
+              "fnpressjs parses key/value ",
+              {
+                "*3Specifying indentation level":
+                  [
+                    "#/*"
+                  ]
+              }
+            ],
+            "Values (Paragraphs)":
+            [
+              "fnpressjs parses key/value ",
+              {
+                "*3Insert code formatted blocks":
+                  [
+                    "#!"
+                  ]
+              }
+            ]
+          }
+        ],
+      "Arrays":"Iteration"
+    }]
+            
+}]`
