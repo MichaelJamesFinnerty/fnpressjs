@@ -46,37 +46,38 @@
             nbar.children[f].addEventListener("click", navclick_handler, false);
           }
 
-        }
-            
-        //  navbar click handler
-        function navclick_handler() {
-                
-          // clear main div contents
-          clear_main();
-          
-          // fnpress object based on the click
-          load_to_main(event.target.innerHTML);
-          
-          //  clear main div contents
-          function clear_main() {
-            var mn = document.getElementById("main");
-            while (mn.firstChild) {mn.removeChild(mn.firstChild);}
+          //  navbar click handler
+          function navclick_handler() {
+  
+            // clear main div contents
+            clear_main();
+  
+            // fnpress object based on the click
+            load_to_main(event.target.innerHTML);
+  
+            //  clear main div contents
+            function clear_main() {
+              var mn = document.getElementById("main");
+              while (mn.firstChild) {mn.removeChild(mn.firstChild);}
+            }
+  
+          }
+  
+          //  create new press object based on the click and fnpress to main
+          function load_to_main(hdr) {
+              var pobj = {}
+              pobj[hdr] = mand[0][hdr];
+              fnpress(pobj, "main");            
+          }
+  
+          //  create table_of_contents and fnpress to navbar        
+          function load_to_nav(sec_headers) {
+              var table_of_contents = {};
+              for (sh in sec_headers) {table_of_contents[sec_headers[sh]] = "";}
+              fnpress(table_of_contents, "navbar");
           }
 
-        }
-        
-        //  create new press object based on the click and fnpress to main
-        function load_to_main(hdr) {
-            var pobj = {}
-            pobj[hdr] = mand[0][hdr];
-            fnpress(pobj, "main");            
-        }
-        
-        //  create table_of_contents and fnpress to navbar        
-        function load_to_nav(sec_headers) {
-            var table_of_contents = {};
-            for (sh in sec_headers) {table_of_contents[sec_headers[sh]] = "";}
-            fnpress(table_of_contents, "navbar");
+            
         }
         
     </script>

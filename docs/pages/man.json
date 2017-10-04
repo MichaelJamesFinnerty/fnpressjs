@@ -30,7 +30,11 @@ An example deployment
 
 var man_data = `[{
 
-    "Hello":"World",
+    "fnpresjs":{"lightweight html/json templating":[
+        {"What am I looking at?":"Welcome to fnpress, a js package that allows you to parse json to HTML and throw it into divs to efficiently populate webtext without cluttering your code with a bunch of fungible text (e.g. the documentation page you're currently reading)."},
+        {"But I prefer X (probaby something in Ruby).":"Totally cool. X is great, use X till the sun burns out -- but fnpress is different. fnpress is 125 lines of vanilla javascript that allows you to throw json into an html structure with no effort. Either you see a use for that, or you don't."},
+        {"This doesn't seem useful.":"Don't use it."}]
+    },
 
     "Quick Start": [
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
@@ -41,44 +45,54 @@ var man_data = `[{
 
         "fnpressjs is <a href='https://github.com/michaeljamesfinnerty/fnpressjs'>hosted through github</a> and can be cloned, downloaded as a compressed (.zip) archive, or added as a submodule to an existing repository",
         {
-          "Cloning fnpressjs":"",
-          "Downloading fnpressjs as a .zip archive":"",
-          "Adding fnpressjs to an existing repository":""
+          "Cloning fnpressjs":[
+            "Clone from github via the terminal:",
+            "#!$ git clone https://github.com/MichaelJamesFinnerty/fnpressjs.git"],
+          "Downloading fnpressjs as a .zip archive":
+            "Go to the <a target='none' href='https://github.com/michaeljamesfinnerty/fnpressjs'>fnpressjs repository page on github</a>, click the green 'Clone or download' button, and then the 'Download ZIP' button. This will download the package to your computer, and you can then move it to your project location, or make copies as needed.",
+          "Adding fnpressjs to an existing repository":[
+            "Navigate to your repository in the terminal, and then execute the following to add fnpressjs as a submodule to your project:",
+            "#!$ git submodule add https://github.com/michaeljamesfinnerty/fnpressjs fnpressjs"]
         }
     ],
 
     "Kinds of objects":[{
       "Key/Value pairs":
         [
-          "fnpressjs parses key/value pairs into html headings and paragrphs, respecively.",
-          "#!{'Hello':'World'}",
-          "#!Will render as",
-          "#!<h1 class='header1'>Hello</h1>",
-          "#!<p class='graf'>World</p>",
+          "fnpressjs parses key/value pairs into html headings and paragrphs, respectively.",
+          "Nested items are progressively indented to improve the default readability.",
+          "#!For example:\\n{'Hello':'World!'}\\n\\nWill render as:\\n<h1 class='header1' style='margin-left: 12px'>Hello</h1>\\n<p class='graf'>World!</p>",
           {
-            "Keys (Headings)":
+            "*2Keys (Headings)":
             [
-              "fnpressjs parses key/value ",
+              "By default, the heading level will increment with each level of nesting, from 1 to 6.",
+              "A top-level key will render to an &lt;h1&gt; heading, a key that's nested at the next level will be an &lt;h2&gt; heading, and so forth.",
+              "#!For example:\\n{'Hello':\\n  {'World':'!'}\\n}\\n\\nWill render as:\\n<h1 class='header6' style='margin-left: 12px'>Hello</h1>\\n<h2 class='header2' style='margin-left: 24px'>World</h2>\\n<p class='graf'>!</p>",
               {
-                "*3Specifying indentation level":
+                "*2Specifying indentation level":
                   [
-                    "#/*"
+                    "You can manually set the heading level of any key with the # or * characters.",
+                    "The * character will set the heading level, but preserve the original indentation level for the heading.",
+                    "#!For example:\\n{'*6Hello':\\n  {'*1World':'!'}\\n}\\n\\nWill render as:\\n<h6 class='header6' style='margin-left: 12px'>Hello</h6>\\n<h1 class='header1' style='margin-left: 24px'>World</h1>\\n<p class='graf'>!</p>",
+                    "The # chracter will set the heading level, and use the indentation level associated with the specified heading level.",
+                    "#!For example:\\n{'#6Hello':\\n  {'#1World':'!'}\\n}\\n\\nWill render as:\\n<h6 class='header6' style='margin-left: 72px'>Hello</h6>\\n<h1 class='header1' style='margin-left: 12px'>World</h1>\\n<p class='graf'>!</p>"
                   ]
               }
             ],
-            "Values (Paragraphs)":
+            "*2Values (Paragraphs)":
             [
-              "fnpressjs parses key/value ",
+              "Plain strings of text (as value in a key/value pair, or members of an array) will be rendered into paragraph objects.",
               {
                 "*3Insert code formatted blocks":
                   [
-                    "#!"
+                    "Text can also be throw into html code blocks by intoducing the text with '#!'.",
+                    "#!For example:\\n#!<p>Hello, World!</p>\\n\\nWill render as:\\n<><>"
                   ]
               }
             ]
           }
         ],
-      "Arrays":"Iteration"
+      "*2Arrays":"Iteration"
     }]
             
 }]`

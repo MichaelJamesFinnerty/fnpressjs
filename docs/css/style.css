@@ -25,3 +25,10 @@ body {
 .code + .code {
     margin-top: 0;
 }
+
+pre {
+    width: inherit;
+    background: gainsboro;
+    padding: 15px;
+    box-sizing: border-box;
+}
