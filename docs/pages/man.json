@@ -30,16 +30,11 @@ An example deployment
 
 var man_data = `[{
 
-    "fnpresjs":{"lightweight html/json templating":[
-        {"What am I looking at?":"Welcome to fnpress, a js package that allows you to parse json to HTML and throw it into divs to efficiently populate webtext without cluttering your code with a bunch of fungible text (e.g. the documentation page you're currently reading)."},
-        {"But I prefer X (probaby something in Ruby).":"Totally cool. X is great, use X till the sun burns out -- but fnpress is different. fnpress is 125 lines of vanilla javascript that allows you to throw json into an html structure with no effort. Either you see a use for that, or you don't."},
-        {"This doesn't seem useful.":"Don't use it."}]
-    },
-
-    "Quick Start": [
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-        "Voluptatum libero voluptatibus natus possimus, earum ut, adipisci iste, cum, maiores eligendi doloremque doloribus aliquam nobis est quis.",
-        "Quos aut, sunt tempore."],
+    "fnpressjs":{"lightweight html/json templating":[
+        {"What am I looking at?":["Welcome to fnpress, a utility (implemented as a js package) that allows you to parse json to HTML and throw it into a div and efficiently populate webtext without cluttering your code with a bunch of fungible text.","If you prefer storing content in JSON, you can use fnpress to power an entire page  (e.g. the documentation page you're currently reading)."," If you have API data that needs to be displayed within a larger static HTML structure, fnpressjs provides a KISS alternative to Angular.js."]},
+        {"But I prefer X (probaby something in Ruby, or Angular.js).":"Totally cool. X is great, use X till the sun burns out -- but fnpress is different. fnpress is 125 lines of vanilla javascript that allows you to throw json into an html structure with no effort. Either you see a use for that, or you don't."},
+        {"This doesn't seem useful.":"Don't use it."}
+    ]},
 
     "Installing fnpressjs": [
 
@@ -49,14 +44,23 @@ var man_data = `[{
             "Clone from github via the terminal:",
             "#!$ git clone https://github.com/MichaelJamesFinnerty/fnpressjs.git"],
           "Downloading fnpressjs as a .zip archive":
-            "Go to the <a target='none' href='https://github.com/michaeljamesfinnerty/fnpressjs'>fnpressjs repository page on github</a>, click the green 'Clone or download' button, and then the 'Download ZIP' button. This will download the package to your computer, and you can then move it to your project location, or make copies as needed.",
+            "Go to the <a target='none' href='https://github.com/michaeljamesfinnerty/fnpressjs'>fnpressjs repository page on github</a>, click the green 'Clone or download' button, and then the 'Download ZIP' button. This will download the package as a ZIP file to your computer. You can then unzip the file and move it to your project location, or make copies as needed.",
           "Adding fnpressjs to an existing repository":[
             "Navigate to your repository in the terminal, and then execute the following to add fnpressjs as a submodule to your project:",
             "#!$ git submodule add https://github.com/michaeljamesfinnerty/fnpressjs fnpressjs"]
         }
     ],
 
-    "Kinds of objects":[{
+    "Quick Start and License": [
+        "Load fnpressjs as a resource for your page, and then point it at divs to populate them with parsed JSON content.",
+        "#!<head>\\n\\t<script src='../fnpress.js'></script>\\n\\t<script src='pages/main.json'></script> <!-- Contains a json string stored as variable 'main_data' -->\\n</head>\\n\\n<body>\\n\\n\\t<div>\\n\\t\\t<div id='main'></div>\\n\\t</div>\\n\\n\\t<script>\\n\\t\\tfnpress(JSON.parse(main_data), 'main');\\n\\t</script>\\n\\n</body>\\n\\n</html>",
+        "Quos aut, sunt tempore.",
+        {"License":[
+            "This product is Copyrighted in U.S., under all aplicable laws and regulations, for a period of at least 28 years, and anybody caught singin it without our permission, will be mighty good friends of ourn, cause we don’t give a dern. Publish it. Write it. Sing it. Swing to it. Yodel it. We wrote it, that’s all we wanted to do. (Modified license text from an original by Woody Guthrie.)"
+            ]}
+    ],
+
+    "Syntax Guide":[{
       "Key/Value pairs":
         [
           "fnpressjs parses key/value pairs into html headings and paragrphs, respectively.",
@@ -86,13 +90,16 @@ var man_data = `[{
                 "*3Insert code formatted blocks":
                   [
                     "Text can also be throw into html code blocks by intoducing the text with '#!'.",
-                    "#!For example:\\n#!<p>Hello, World!</p>\\n\\nWill render as:\\n<><>"
+                    "#!For example:\\n#!<p>Hello, World!</p>\\n\\nWill render as:\\n<code class='code'>\\n\\t<p>Hello, World!</p>\\n</code>",
+                    "You can also render multiline code blocks by using a new line character, but as with all such characters in json, you'll need to escape the backslash like so:\\\\\\\\n",
+                    "#!For example:\\n#!<p>Hello,</p>\\\\\\\\n<p>World!</p>\\n\\nWill render as:\\n<code class='code'>\\n\\t<p>Hello,</p>\\n\\t<p>World!</p>\\n</code>"
                   ]
               }
             ]
           }
         ],
-      "*2Arrays":"Iteration"
+      "*2Arrays":["Content stored in arrays will be iterated at a uniform level.",
+          "#!For example:\\n{'Hello':\\n  ['World','!']}\\n}\\n\\nWill render as:\\n<h1 class='header1' style='margin-left: 12px'>Hello</h1>\\n<p class='graf'>World</p>\\n<p class='graf'>!</p>"]
     }]
             
 }]`

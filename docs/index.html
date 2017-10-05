@@ -6,7 +6,7 @@
     <title>fnpressjs | lightweight json to html templating</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Pragati+Narrow" rel="stylesheet">
-    <script src="../fnpress.js"></script>
+    <script src="./js/fnpress.js"></script>
     <script src="pages/man.json"></script>
 </head>
 
@@ -39,7 +39,7 @@
         
           //  fnpress the navbar and initial main window contents        
           load_to_nav(sec_headers);
-          load_to_main("Kinds of objects");
+          load_to_main("Quick Start and License");
 
           //  apply click listener to element in navbar
           for (f = 0; f < nbar.children.length; f++) {
@@ -47,8 +47,11 @@
           }
 
           //  navbar click handler
-          function navclick_handler() {
+          function navclick_handler(event) {
   
+            //establish the click event
+            if( !event ) event = window.event;
+              
             // clear main div contents
             clear_main();
   
